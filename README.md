@@ -28,7 +28,7 @@ This system provides military-grade code obfuscation by hiding malicious Python 
 ### Installation
 ```bash
 # Clone or download the files
-git clone <repository-url>
+git clone https://github.com/Sirenkonett/Python-Stealth-Obfuscator.git
 cd stealth-obfuscation
 
 # Install dependencies (if needed)
