@@ -158,9 +158,8 @@ for script in glob.glob("scripts/*.py"):
 ## ⚠️ Security Considerations
 
 ### What This System Evades
-- **Static Analysis**: No suspicious strings in plain text
+- **Static Analysis**: No strings in plain text
 - **Signature Detection**: Polymorphic output each time
-- **Pattern Recognition**: Hidden in innocent-looking content
 - **Basic Debugging**: Anti-debugger protections
 
 ### Limitations
