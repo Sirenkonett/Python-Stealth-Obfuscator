@@ -5,7 +5,7 @@
 
 ## 📋 Overview
 
-This system provides military-grade code obfuscation by hiding malicious Python code inside seemingly innocent fairy tale stories. The code is encoded in invisible whitespace characters (spaces and tabs) at the end of each line, making it completely undetectable by static analysis tools.
+This system provides military-grade code obfuscation by hiding Python code inside seemingly innocent fairy tale stories. The code is encoded in invisible whitespace characters (spaces and tabs) at the end of each.
 
 ## 🎯 Features
 
