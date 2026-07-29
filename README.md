@@ -1,254 +1,127 @@
-Overview
-This system provides a method for protecting Python code by steganographically embedding it within generated texts (such as narrative stories). The actual code is encoded via invisible spaces and tabs at the end of each line to encapsulate the script's functionality in an inconspicuous manner.
+Abstract
+This repository provides an advanced framework for Python code protection utilizing text-based steganography. The system encapsulates functional Python scripts within procedurally generated natural language narratives. The executable payload is encoded via invisible whitespace manipulation (spaces and tabs) at the end of each line, allowing the code to remain fully operational while appearing as standard text files to static analysis tools.
 
-Features
-Protection Mechanisms
-No Plaintext Strings: Avoidance of readable strings in the output code.
+Core Capabilities
+Security & Protection Mechanisms
+Zero-Plaintext Footprint: Eliminates readable strings in the output source, mitigating basic static analysis and signature detection.
 
-Dynamic Key Generation: XOR keys are based on the structural properties of the text.
+Context-Aware Cryptography: Cryptographic XOR keys are dynamically derived from the structural entropy and linguistic properties of the generated carrier text.
 
-Environment Checks: Basic verification of the runtime and execution environment.
+Anti-Analysis Heuristics: Implements runtime environment verification and execution timing checks to detect debugging attempts.
 
-Integrity Protection: SHA-256 checksum verification against modifications.
+Integrity Verification: Utilizes SHA-256 checksums to prevent tampering and ensure payload integrity prior to execution.
 
-Mathematical Obfuscation: Use of opaque predicates for complex control structures.
+Control Flow Obfuscation: Employs opaque predicates and mathematical identities to complicate control flow graphs.
 
-Import Management: Base64-encoded and protected module imports.
+Protected Imports: Secures module dependencies via base64-encoded, dynamically resolved imports.
 
-Steganographic Features
-Text Embedding: Code is packaged within generated narratives.
+Steganographic Architecture
+Narrative Embedding: Payloads are steganographically hidden within auto-generated text bodies.
 
-Whitespace Encoding: Storage of the data structure in invisible spaces and tabs.
+Whitespace Encoding: Translates binary payload data into non-printing characters, preserving the visual structure of the carrier text.
 
-Dynamic Text Generation: Each build process creates entirely new text structures.
+Polymorphic Generation: Each build process yields a unique file signature and text structure, ensuring high variance across deployments.
 
-Polymorphic Output: Different file signatures for each iteration.
+Getting Started
+Prerequisites
+Python 3.8 or higher
 
-Quick Start
+Required packages: requests, pycryptodome
+
 Installation
 Bash
-# Clone or download the files
+# Clone the repository
 git clone https://github.com/Sirenkonett/Python-Stealth-Obfuscator.git
 cd stealth-obfuscation
 
-# Install dependencies (if required)
+# Install dependencies
 pip install requests pycryptodome
 Basic Usage
+The system consists of two primary components: the builder (encoder) and the engine (decoder/executor).
+
 Bash
-# Process and embed the Python code
-python builder_v2.py your_script.py output.py
+# Encode and embed the target Python script
+python builder_v2.py source_script.py generated_output.py
 
-# Execute the processed code
-python engine.py output.py
-File Structure
-Plaintext
-stealth-obfuscation/
-├── builder_v2.py      # Main program for code embedding
-├── engine.py          # Execution environment with integrity checks
-├── README.md          # This file
-└── your_files/        # Your Python scripts to be processed
-How It Works
-1. Embedding Process (builder_v2.py)
-Read Input: The source Python script is loaded.
+# Execute the steganographically embedded script
+python engine.py generated_output.py
+System Architecture
+1. The Encoder (builder_v2.py)
+Capacity Allocation: Analyzes the target script to determine the requisite bit capacity and text length.
 
-Calculate Capacity: Determines the required lines and bits for embedding.
+Carrier Generation: Synthesizes a narrative text meeting the exact structural requirements for the payload.
 
-Text Generation: Creates a text with the exact required character capacity.
+Key Derivation: Generates a cryptographic key strictly based on the structural metrics of the synthesized text.
 
-Dynamic Key: Generates a cryptographic key from the text features.
+Payload Encryption: Applies XOR encryption to the compiled target script.
 
-Encrypt Data: Performs an XOR encryption of the code.
+Steganographic Injection: Translates the encrypted binary sequence into trailing whitespaces and injects them into the carrier text.
 
-Whitespace Injection: Converts the encrypted bits into spaces and tabs.
+2. The Execution Engine (engine.py)
+Heuristic Validation: Executes environmental and temporal checks to detect analysis environments.
 
-Save Output: Saves the generated text with the embedded code.
+Payload Extraction: Parses the carrier text, isolating and decoding the steganographic whitespace sequence.
 
-2. Execution Process (engine.py)
-System Checks: Integrity and runtime verification.
+Key Reconstruction: Recalculates the cryptographic key using the same structural metrics as the encoder.
 
-Extract Data: Reads the invisible characters and converts them back into bits.
+Decryption & Execution: Decrypts the payload and executes it within an isolated, dynamically constructed Python namespace.
 
-Generate Key: Reconstructs the dynamic key based on the text.
+API & Extensibility
+The framework is designed to be highly modular. Researchers can easily adapt the core components for custom implementations.
 
-Decrypt Data: Decrypts the embedded code.
+Customizing the Carrier Text (builder_v2.py)
+You can modify the semantic structure of the generated text by altering the generation dictionaries:
 
-Execute Code: Starts the original script in an isolated namespace.
-
-Customization Guide
-Modifying the Builder (builder_v2.py)
-Change Text Templates
 Python
 self.story_templates = [
-    "Once upon a time, the {character} who {action} in the {location}. {junk_sentence}",
-    "In a distant {location} lived the {character}, who {action}. {junk_sentence}",
-    # Add your own templates here
+    "The analysis of {subject} demonstrated that {action} occurred in the {environment}. {junk_data}",
+    "Initial findings regarding {subject} suggest {action} within the {environment}. {junk_data}",
 ]
-Add New Variables
+
+self.subjects = ["Dataset A", "Component B", "Module C", "Subsystem D"]
+self.environments = ["runtime environment", "isolated container", "memory space"]
+Extending Anti-Analysis Checks (engine.py)
+Environmental validation can be customized to include stricter runtime constraints:
+
 Python
-self.characters = ["Prince", "King", "Researcher", "Scholar", "YourCharacter"]
-self.locations = ["Forest", "Mountain", "Laboratory", "Archive", "YourLocation"]
-self.actions = ["searched", "found", "analyzed", "built", "YourAction"]
-Modify Encryption
-Python
-def _xor_encrypt(self, data: bytes, key: bytes) -> bytes:
-    # Can be replaced with other encryption algorithms
-    return bytes([b ^ key[i % len(key)] for i, b in enumerate(data)])
-Modifying the Engine (engine.py)
-Adjust System Checks
-Python
-def _environment_check(self):
-    # Adjust thresholds for timing analysis
-    self._timing_threshold = 0.05  # 50ms instead of 100ms
+def _verify_execution_environment(self) -> bool:
+    # Tighten timing analysis constraints (e.g., 50ms variance)
+    self._timing_variance_threshold = 0.05 
     
-    # Add new verification methods
-    if hasattr(sys, 'gettrace') and sys.gettrace():
-        return True
-    return False
-Modify Key Generation
+    # Check for active tracing tools
+    import sys
+    if hasattr(sys, 'gettrace') and sys.gettrace() is not None:
+        return False
+        
+    return True
+Implementing Alternative Cryptography
+The default XOR encryption can be swapped for industry-standard algorithms:
+
 Python
-def _generate_dynamic_key_from_script(self, script_lines: List[str]) -> bytes:
-    # Change the method of key generation
-    word_count = len(script_lines[1].split())
-    total_lines = len([l for l in script_lines if l.strip()])
-    key_material = f"{word_count}_{total_lines}_8"
-    return hashlib.sha256(key_material.encode('utf-8')).digest()[:32]
-Add New Opaque Predicates
-Python
-# Add mathematical identities that always evaluate to True
-x = 5.0
-if (x**2 - 25) == 0:  # x² = 25 for x=5
-    # Your code here
-Advanced Features
-Automatic Capacity Adjustment
-The system automatically calculates the required text size:
+def _encrypt_payload(self, data: bytes, key: bytes) -> bytes:
+    from Crypto.Cipher import AES
+    # Note: Requires IV management implementation
+    cipher = AES.new(key, AES.MODE_GCM)
+    return cipher.encrypt(data)
+Threat Model & Technical Limitations
+When evaluating this tool for software protection, please note the following architectural limitations:
 
-Small scripts: ~50-100 lines
+In-Memory Exposure: The decrypted payload ultimately resides in memory during execution. Advanced memory dumping techniques or dynamic instrumentation (e.g., Frida) can extract the original code.
 
-Medium scripts: ~200-400 lines
+Network Transparency: This framework obfuscates the script on disk but does not intercept or encrypt network traffic generated by the underlying payload.
 
-Large scripts: ~500+ lines
+Behavioral Signatures: While the static file signature is highly polymorphic, the runtime behavior of the executed script remains unchanged and can be identified by behavioral analysis sandboxes.
 
-Multiple Output Formats  
-Bash
-# Generate different text styles
-python builder_v2.py script.py output1.py
-Batch Processing  
-Python
-# Process multiple files
-import glob
-import os
-import subprocess
-
-for script in glob.glob("scripts/*.py"):
-    output = f"obfuscated/{os.path.basename(script)}"
-    subprocess.run(["python", "builder_v2.py", script, output])
-Technical Characteristics and Limitations
-Code Analysis Properties
-Static Analysis: Avoids storing strings in plaintext.
-
-Signature Detection: Generates polymorphic output on every operation.
-
-Runtime Analysis: Utilizes basic checks of the execution environment.
-
-Limitations
-Dynamic Analysis: The script's behavior remains analyzable during execution.
-
-Memory Analysis: The code exists in memory during runtime.
-
-Network Traffic: The embedding does not affect network calls of the original script.
-
-Best Practices
-Thorough testing of the processed code prior to production use.
-
-Use different keys for each deployment.
-
-Combine with other methods (e.g., standard packers) for enhanced software protection.
-
-Verify compatibility, especially with complex module dependencies.
+Recommendation: For robust software protection, this steganographic layer should be utilized as part of a defense-in-depth strategy, combined with native code compilation (e.g., Cython) and process-hollowing prevention mechanisms.
 
 Troubleshooting
-Common Issues
-"Data truncated" Error
-Bash
-# Increase capacity in builder_v2.py
-bits_per_line = 64  # Increase from 32
-total_lines = needed_lines + 50  # Enlarge safety margin
-"Key mismatch" Error
-Bash
-# Ensure both files use the same key generation
-# Check word counting logic
-# Verify consistency of line counting
-"GUI not appearing"
-Bash
-# Add required imports to the engine namespace
-namespace['tk'] = lib  # For tkinter as tk
-namespace['__name__'] = '__main__'  # For if __name__ == '__main__'
-Debug Mode
-Enable debug output in engine.py:
+Payload Truncation / Data Loss: If the encoded script is too large for the generated text, increase the bit-per-line capacity in builder_v2.py (e.g., bits_per_line = 64) or increase the structural safety margin.
 
-Python
-# Uncomment these lines for error analysis
-print(f"Extracted {len(data_bits)} bits, {len(data_bytes)} bytes")
-print(f"Full data: {repr(data_str)}")
-Examples
-Simple GUI Application
-Python
-# test.py
-import tkinter as tk
+Cryptographic Key Mismatch: Ensure that the text parsing logic (e.g., line and word counting) is perfectly synchronized between builder_v2.py and engine.py. Any whitespace alteration by an IDE or text editor will corrupt the payload.
 
-def main():
-    root = tk.Tk()
-    root.title("Test Window")
-    root.geometry("300x200")
-    
-    label = tk.Label(root, text="Test successfully executed!")
-    label.pack(pady=20)
-    
-    root.mainloop()
+GUI Framework Issues: When wrapping GUI applications (like tkinter or PyQt), ensure all necessary top-level modules are explicitly injected into the execution namespace within engine.py.
 
-if __name__ == "__main__":
-    main()
-Development Guide
-Adding New Features
-1. New Encryption Method
-Python
-class AdvancedBuilder(StealthBuilderV2):
-    def _aes_encrypt(self, data: bytes, key: bytes) -> bytes:
-        from Crypto.Cipher import AES
-        cipher = AES.new(key, AES.MODE_GCM)
-        return cipher.encrypt(data)
-2. New Text Themes
-Python
-# Add scientific text templates
-self.science_templates = [
-    "The {character} conducted the {action} in the {location}. {junk_sentence}",
-    "Research indicated that {character} {action} in {location}. {junk_sentence}",
-]
-3. API Obfuscation  
-Python
-def _obfuscate_api_calls(self, code: str) -> str:
-    # Replace direct calls with indirect imports
-    code = code.replace("requests.post", "__import__('requests').post")
-    return code
-License  
-This code is for educational purposes and the research of steganographic concepts only. Users are responsible for complying with applicable laws and regulations.  
+License & Legal Disclaimer
+This repository is licensed under the MIT License.
 
-Contributing
-Fork the repository
-
-Create a feature branch
-
-Add your improvements
-
-Submit a Pull Request
-
-Support
-For issues and questions:
-
-Create an issue on GitHub
-
-Check the troubleshooting section
-
-Review the examples
-
-Disclaimer: This tool was developed exclusively for educational and research purposes in the field of software protection and steganography. Users must comply with all applicable local and international laws.
+Disclaimer: This framework is developed and published strictly for academic research, educational purposes, and the study of steganography and software obfuscation techniques. The author(s) assume no liability and are not responsible for any misuse or damage caused by this program. Users must adhere to all applicable local, state, and federal laws when utilizing this software.
