@@ -1,215 +1,198 @@
-# Python-Stealth-Obfuscator[README.md](https://github.com/user-attachments/files/25792698/README.md)
-# 🕵️‍♂️ Stealth Python Obfuscation System
+Overview
+This system provides a method for protecting Python code by steganographically embedding it within generated texts (such as narrative stories). The actual code is encoded via invisible spaces and tabs at the end of each line to encapsulate the script's functionality in an inconspicuous manner.
 
-**High-Security Python Code Obfuscation with Fairy Tale Camouflage**
+Features
+Protection Mechanisms
+No Plaintext Strings: Avoidance of readable strings in the output code.
 
-## 📋 Overview
+Dynamic Key Generation: XOR keys are based on the structural properties of the text.
 
-This system provides military-grade code obfuscation by hiding Python code inside seemingly innocent fairy tale stories. The code is encoded in invisible whitespace characters (spaces and tabs) at the end of each.
+Environment Checks: Basic verification of the runtime and execution environment.
 
-## 🎯 Features
+Integrity Protection: SHA-256 checksum verification against modifications.
 
-### 🛡️ Security Features
-- **Zero-String Policy**: No plaintext strings in the obfuscated code
-- **Dynamic Key Generation**: XOR keys generated from story features
-- **Anti-Debugger Protection**: Timing and tracer detection
-- **Anti-Tamper Protection**: SHA-256 checksum verification
-- **Opaque Predicates**: Mathematical identities for obfuscation
-- **Library Hiding**: Hidden imports with base64 encoding
+Mathematical Obfuscation: Use of opaque predicates for complex control structures.
 
-### 🎭 Stealth Features
-- **Fairy Tale Camouflage**: Code hidden in innocent-looking stories
-- **Whitespace Encoding**: Payload stored in invisible spaces/tabs
-- **Dynamic Story Generation**: Each build creates unique stories
-- **Polymorphic Output**: Different obfuscation each time
+Import Management: Base64-encoded and protected module imports.
 
-## 🚀 Quick Start
+Steganographic Features
+Text Embedding: Code is packaged within generated narratives.
 
-### Installation
-```bash
+Whitespace Encoding: Storage of the data structure in invisible spaces and tabs.
+
+Dynamic Text Generation: Each build process creates entirely new text structures.
+
+Polymorphic Output: Different file signatures for each iteration.
+
+Quick Start
+Installation
+Bash
 # Clone or download the files
 git clone https://github.com/Sirenkonett/Python-Stealth-Obfuscator.git
 cd stealth-obfuscation
 
-# Install dependencies (if needed)
+# Install dependencies (if required)
 pip install requests pycryptodome
-```
-
-### Basic Usage
-```bash
-# Obfuscate your Python code
+Basic Usage
+Bash
+# Process and embed the Python code
 python builder_v2.py your_script.py output.py
 
-# Execute the obfuscated code
+# Execute the processed code
 python engine.py output.py
-```
-
-## 📁 File Structure
-
-```
+File Structure
+Plaintext
 stealth-obfuscation/
-├── builder_v2.py      # Enhanced obfuscation builder
-├── engine.py          # Execution engine with security checks
+├── builder_v2.py      # Main program for code embedding
+├── engine.py          # Execution environment with integrity checks
 ├── README.md          # This file
-└── your_files/       # Your Python scripts to obfuscate
-```
+└── your_files/        # Your Python scripts to be processed
+How It Works
+1. Embedding Process (builder_v2.py)
+Read Input: The source Python script is loaded.
 
-## 🔧 How It Works
+Calculate Capacity: Determines the required lines and bits for embedding.
 
-### 1. Obfuscation Process (`builder_v2.py`)
-1. **Read Input**: Your Python script is loaded
-2. **Calculate Capacity**: Determines required lines and bits
-3. **Generate Story**: Creates unique fairy tale with exact capacity
-4. **Dynamic Key**: Generates XOR key from story features
-5. **Encrypt Payload**: XOR-encrypts your code with the key
-6. **Whitespace Injection**: Converts encrypted bits to spaces/tabs
-7. **Write Output**: Saves fairy tale with hidden payload
+Text Generation: Creates a text with the exact required character capacity.
 
-### 2. Execution Process (`engine.py`)
-1. **Security Checks**: Anti-debugger and anti-tamper verification
-2. **Extract Payload**: Reads whitespaces and converts to bits
-3. **Generate Key**: Recreates the same dynamic key
-4. **Decrypt Payload**: XOR-decrypts the hidden code
-5. **Execute Code**: Runs your original Python in isolated namespace
+Dynamic Key: Generates a cryptographic key from the text features.
 
-## 🛠️ Customization Guide
+Encrypt Data: Performs an XOR encryption of the code.
 
-### Modifying the Builder (`builder_v2.py`)
+Whitespace Injection: Converts the encrypted bits into spaces and tabs.
 
-#### Change Story Templates
-```python
-self.fairy_tale_templates = [
-    "Es war einmal {character}, der {action} im {location}. {junk_sentence}",
-    "In einem fernen {location} lebte {character}, der {action}. {junk_sentence}",
+Save Output: Saves the generated text with the embedded code.
+
+2. Execution Process (engine.py)
+System Checks: Integrity and runtime verification.
+
+Extract Data: Reads the invisible characters and converts them back into bits.
+
+Generate Key: Reconstructs the dynamic key based on the text.
+
+Decrypt Data: Decrypts the embedded code.
+
+Execute Code: Starts the original script in an isolated namespace.
+
+Customization Guide
+Modifying the Builder (builder_v2.py)
+Change Text Templates
+Python
+self.story_templates = [
+    "Once upon a time, the {character} who {action} in the {location}. {junk_sentence}",
+    "In a distant {location} lived the {character}, who {action}. {junk_sentence}",
     # Add your own templates here
 ]
-```
-
-#### Add New Characters/Locations
-```python
-self.characters = ["Prinz", "König", "Ritter", "Zauberer", "YourCharacter"]
-self.locations = ["Wald", "Berg", "Tal", "Schloss", "YourLocation"]
-self.actions = ["suchte", "fand", "verlor", "baute", "YourAction"]
-```
-
-#### Modify Encryption
-```python
+Add New Variables
+Python
+self.characters = ["Prince", "King", "Researcher", "Scholar", "YourCharacter"]
+self.locations = ["Forest", "Mountain", "Laboratory", "Archive", "YourLocation"]
+self.actions = ["searched", "found", "analyzed", "built", "YourAction"]
+Modify Encryption
+Python
 def _xor_encrypt(self, data: bytes, key: bytes) -> bytes:
-    # Replace with your own encryption algorithm
+    # Can be replaced with other encryption algorithms
     return bytes([b ^ key[i % len(key)] for i, b in enumerate(data)])
-```
-
-### Modifying the Engine (`engine.py`)
-
-#### Change Security Checks
-```python
-def _anti_debugger_check(self):
-    # Modify timing threshold
-    self._debug_threshold = 0.05  # 50ms instead of 100ms
+Modifying the Engine (engine.py)
+Adjust System Checks
+Python
+def _environment_check(self):
+    # Adjust thresholds for timing analysis
+    self._timing_threshold = 0.05  # 50ms instead of 100ms
     
-    # Add new detection methods
+    # Add new verification methods
     if hasattr(sys, 'gettrace') and sys.gettrace():
         return True
     return False
-```
-
-#### Modify Key Generation
-```python
+Modify Key Generation
+Python
 def _generate_dynamic_key_from_script(self, script_lines: List[str]) -> bytes:
-    # Change how keys are generated
-    word_count = len(script_lines[1].split())  # Different calculation
+    # Change the method of key generation
+    word_count = len(script_lines[1].split())
     total_lines = len([l for l in script_lines if l.strip()])
     key_material = f"{word_count}_{total_lines}_8"
     return hashlib.sha256(key_material.encode('utf-8')).digest()[:32]
-```
-
-#### Add New Opaque Predicates
-```python
+Add New Opaque Predicates
+Python
 # Add mathematical identities that always evaluate to True
 x = 5.0
 if (x**2 - 25) == 0:  # x² = 25 for x=5
     # Your code here
-```
+Advanced Features
+Automatic Capacity Adjustment
+The system automatically calculates the required text size:
 
-## 🔍 Advanced Features
+Small scripts: ~50-100 lines
 
-### Custom Payload Capacity
-The system automatically calculates required capacity:
-- **Small scripts**: ~50-100 lines
-- **Medium scripts**: ~200-400 lines  
-- **Large scripts**: ~500+ lines
+Medium scripts: ~200-400 lines
 
-### Multiple Output Formats
-```bash
-# Generate different fairy tale styles
-python builder_v2.py script.py output1.py  # German fairy tales
-# Modify builder for English, French, etc.
-```
+Large scripts: ~500+ lines
 
-### Batch Processing
-```python
+Multiple Output Formats  
+Bash
+# Generate different text styles
+python builder_v2.py script.py output1.py
+Batch Processing  
+Python
 # Process multiple files
 import glob
+import os
+import subprocess
+
 for script in glob.glob("scripts/*.py"):
     output = f"obfuscated/{os.path.basename(script)}"
     subprocess.run(["python", "builder_v2.py", script, output])
-```
+Technical Characteristics and Limitations
+Code Analysis Properties
+Static Analysis: Avoids storing strings in plaintext.
 
-## ⚠️ Security Considerations
+Signature Detection: Generates polymorphic output on every operation.
 
-### What This System Evades
-- **Static Analysis**: No strings in plain text
-- **Signature Detection**: Polymorphic output each time
-- **Basic Debugging**: Anti-debugger protections
+Runtime Analysis: Utilizes basic checks of the execution environment.
 
-### Limitations
-- **Dynamic Analysis**: Can be detected during execution
-- **Memory Analysis**: Payload exists in memory when running
-- **Network Traffic**: Obfuscation doesn't hide network calls
+Limitations
+Dynamic Analysis: The script's behavior remains analyzable during execution.
 
-### Best Practices
-1. **Always test** obfuscated code before deployment
-2. **Use different keys** for each deployment
-3. **Combine with other techniques** (packers, runtime encryption)
-4. **Monitor detection** of your specific use case
+Memory Analysis: The code exists in memory during runtime.
 
-## 🐛 Troubleshooting
+Network Traffic: The embedding does not affect network calls of the original script.
 
-### Common Issues
+Best Practices
+Thorough testing of the processed code prior to production use.
 
-#### "Payload truncated" Error
-```bash
+Use different keys for each deployment.
+
+Combine with other methods (e.g., standard packers) for enhanced software protection.
+
+Verify compatibility, especially with complex module dependencies.
+
+Troubleshooting
+Common Issues
+"Data truncated" Error
+Bash
 # Increase capacity in builder_v2.py
 bits_per_line = 64  # Increase from 32
-total_lines = needed_lines + 50  # Add more safety margin
-```
-
-#### "Key mismatch" Error
-```bash
-# Ensure both files use same key generation
-# Check word counting logic in both files
-# Verify line counting consistency
-```
-
-#### "GUI not appearing" 
-```bash
-# Add required imports to engine.py namespace
+total_lines = needed_lines + 50  # Enlarge safety margin
+"Key mismatch" Error
+Bash
+# Ensure both files use the same key generation
+# Check word counting logic
+# Verify consistency of line counting
+"GUI not appearing"
+Bash
+# Add required imports to the engine namespace
 namespace['tk'] = lib  # For tkinter as tk
 namespace['__name__'] = '__main__'  # For if __name__ == '__main__'
-```
+Debug Mode
+Enable debug output in engine.py:
 
-### Debug Mode
-Enable debug output in `engine.py`:
-```python
-# Uncomment these lines for debugging
-print(f"Extracted {len(payload_bits)} bits, {len(payload_bytes)} bytes")
-print(f"Full payload: {repr(payload_str)}")
-```
-
-## 📚 Examples
-
-### Simple GUI Application
-```python
+Python
+# Uncomment these lines for error analysis
+print(f"Extracted {len(data_bits)} bits, {len(data_bytes)} bytes")
+print(f"Full data: {repr(data_str)}")
+Examples
+Simple GUI Application
+Python
 # test.py
 import tkinter as tk
 
@@ -218,64 +201,54 @@ def main():
     root.title("Test Window")
     root.geometry("300x200")
     
-    label = tk.Label(root, text="Stealth Test Successful!")
+    label = tk.Label(root, text="Test successfully executed!")
     label.pack(pady=20)
     
     root.mainloop()
 
 if __name__ == "__main__":
     main()
-```
-
-
-## 🔧 Development Guide
-
-### Adding New Features
-
-#### 1. New Encryption Method
-```python
+Development Guide
+Adding New Features
+1. New Encryption Method
+Python
 class AdvancedBuilder(StealthBuilderV2):
     def _aes_encrypt(self, data: bytes, key: bytes) -> bytes:
         from Crypto.Cipher import AES
         cipher = AES.new(key, AES.MODE_GCM)
         return cipher.encrypt(data)
-```
-
-#### 2. New Story Themes
-```python
-# Add different camouflage themes
+2. New Text Themes
+Python
+# Add scientific text templates
 self.science_templates = [
-    "The {character} conducted {action} in the {location}. {junk_sentence}",
-    "Research showed {character} {action} at {location}. {junk_sentence}",
+    "The {character} conducted the {action} in the {location}. {junk_sentence}",
+    "Research indicated that {character} {action} in {location}. {junk_sentence}",
 ]
-```
-
-#### 3. Network Obfuscation
-```python
-def _obfuscate_network_calls(self, code: str) -> str:
-    # Replace direct network calls with obfuscated versions
+3. API Obfuscation  
+Python
+def _obfuscate_api_calls(self, code: str) -> str:
+    # Replace direct calls with indirect imports
     code = code.replace("requests.post", "__import__('requests').post")
     return code
-```
+License  
+This code is for educational purposes and the research of steganographic concepts only. Users are responsible for complying with applicable laws and regulations.  
 
-## 📄 License
+Contributing
+Fork the repository
 
-This code is for educational purposes only. Users are responsible for complying with local laws and regulations.
+Create a feature branch
 
-## 🤝 Contributing
+Add your improvements
 
-1. Fork the repository
-2. Create a feature branch
-3. Add your improvements
-4. Submit a pull request
+Submit a Pull Request
 
-## 📞 Support
-
+Support
 For issues and questions:
-- Create an issue on GitHub
-- Check the troubleshooting section
-- Review the examples
 
----
+Create an issue on GitHub
 
-**⚠️ Disclaimer**: This tool is designed for educational and research purposes only. Users must comply with applicable laws and regulations.
+Check the troubleshooting section
+
+Review the examples
+
+Disclaimer: This tool was developed exclusively for educational and research purposes in the field of software protection and steganography. Users must comply with all applicable local and international laws.
